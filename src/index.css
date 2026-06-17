@@ -1,0 +1,499 @@
+@import 'tailwindcss';
+@import 'yet-another-react-lightbox/styles.css';
+
+@theme {
+  --color-navy: #13202e;
+  --color-navy-deep: #0e1a26;
+  --color-gold: #f2b40a;
+  --color-gold-deep: #d99a06;
+  --color-red: #c8202a;
+  --color-cream: #faf6ee;
+  --color-slate-brand: #2b3a47;
+  --color-slate-soft: #5c6b78;
+
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-display-expanded: 'Archivo Expanded', 'Archivo', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scroll-padding-bottom: calc(3.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  body {
+    @apply bg-cream font-body text-slate-brand antialiased;
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 1023px) {
+    body {
+      padding-bottom: calc(3.75rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-navy;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-display-expanded {
+    font-family: var(--font-display-expanded);
+  }
+
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  .section-container {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 72vh;
+  }
+
+  @media (min-width: 640px) {
+    .hero-section {
+      min-height: 78vh;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section {
+      margin-top: -7rem;
+      min-height: calc(85vh + 7rem);
+    }
+  }
+
+  .eyebrow {
+    @apply mb-3 text-[13px] font-semibold tracking-[0.14em] text-gold uppercase;
+  }
+
+  .eyebrow-light {
+    @apply mb-3 text-[13px] font-semibold tracking-[0.14em] text-gold-deep uppercase;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  .focus-ring-dark {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy;
+  }
+
+  .focus-ring-white {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2 focus-visible:ring-offset-gold;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    @apply text-[26px] leading-tight font-bold text-navy sm:text-[36px] lg:text-[42px];
+  }
+
+  .section-title-light {
+    font-family: var(--font-display);
+    @apply text-[26px] leading-tight font-bold text-cream sm:text-[36px] lg:text-[42px];
+  }
+
+  .owner-photo-primary {
+    image-orientation: from-image;
+    object-position: center 35%;
+  }
+
+}
+
+.why-us-grid {
+  background-image:
+    linear-gradient(rgba(242, 180, 10, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 180, 10, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 100%);
+}
+
+.why-us-index {
+  color: rgba(242, 180, 10, 0.22);
+  -webkit-text-stroke: 1.5px rgba(242, 180, 10, 0.72);
+  transition:
+    color 0.35s ease,
+    -webkit-text-stroke-color 0.35s ease;
+}
+
+.group:hover .why-us-index {
+  color: rgba(242, 180, 10, 0.38);
+  -webkit-text-stroke-color: #f2b40a;
+}
+
+@keyframes verified-stamp-float {
+  0%,
+  100% {
+    transform: rotate(12deg) translateY(0);
+  }
+  50% {
+    transform: rotate(10deg) translateY(-3px);
+  }
+}
+
+@keyframes verified-stamp-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.35),
+      0 0 0 0 rgba(242, 180, 10, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.4),
+      0 0 0 5px rgba(242, 180, 10, 0);
+  }
+}
+
+.verified-stamp {
+  animation:
+    verified-stamp-float 5s ease-in-out infinite,
+    verified-stamp-glow 4s ease-in-out infinite;
+}
+
+@keyframes trust-badge-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes trust-badge-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.trust-badge-seal {
+  animation: trust-badge-float 6s ease-in-out infinite;
+}
+
+.trust-badge-seal:nth-child(2) {
+  animation-delay: -3s;
+}
+
+.trust-badge-seal:nth-child(2) .trust-badge-ring::before {
+  animation-delay: -14s;
+}
+
+.trust-badge-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  border: 2px dashed rgba(242, 180, 10, 0.45);
+  animation: trust-badge-ring-spin 28s linear infinite;
+}
+
+.trust-badge-seal:hover .trust-badge-ring::before {
+  border-color: rgba(242, 180, 10, 0.75);
+}
+
+[data-rcs='root'] [data-rcs-handle] {
+  width: 3px !important;
+  background: var(--color-gold) !important;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px rgba(242, 180, 10, 0.35);
+}
+
+[data-rcs='root'] [data-rcs-handle-arrow] {
+  border-color: var(--color-gold) !important;
+}
+
+[data-rcs='root'] [data-rcs-handle]:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* ── CTA: shimmer contained inside button only (no pseudo-element bleed) ── */
+@keyframes cta-shimmer-bg {
+  0%,
+  78%,
+  100% {
+    background-position: 120% center;
+  }
+  88% {
+    background-position: -20% center;
+  }
+}
+
+.cta-shimmer {
+  background-image: linear-gradient(
+    105deg,
+    #f2b40a 0%,
+    #f2b40a 38%,
+    #ffe082 50%,
+    #f2b40a 62%,
+    #f2b40a 100%
+  );
+  background-size: 220% 100%;
+  background-color: #f2b40a;
+  animation: cta-shimmer-bg 8s ease-in-out infinite;
+}
+
+.cta-shimmer:hover {
+  background-color: #d99a06;
+  background-image: linear-gradient(
+    105deg,
+    #d99a06 0%,
+    #d99a06 38%,
+    #ffd54f 50%,
+    #d99a06 62%,
+    #d99a06 100%
+  );
+}
+
+/* ── Emergency banner ── */
+@keyframes emergency-bg-drift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes emergency-line-flow {
+  0% {
+    background-position: 150% center;
+  }
+  100% {
+    background-position: -50% center;
+  }
+}
+
+@keyframes emergency-icon-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+  }
+}
+
+.emergency-banner {
+  --emergency-bg: linear-gradient(
+    110deg,
+    #b81c25 0%,
+    #c8202a 35%,
+    #d42a35 50%,
+    #c8202a 65%,
+    #b81c25 100%
+  );
+  background: var(--emergency-bg);
+  background-size: 200% 100%;
+  animation: emergency-bg-drift 14s ease-in-out infinite;
+}
+
+.emergency-headline {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    #fff 42%,
+    rgba(255, 255, 255, 0.55) 50%,
+    #fff 58%,
+    #fff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: emergency-line-flow 8s ease-in-out infinite;
+}
+
+.emergency-icon-pulse {
+  animation: emergency-icon-pulse 3.5s ease-in-out infinite;
+}
+
+/* ── Hero service pills ── */
+@keyframes pill-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.hero-pill {
+  animation: pill-float 5s ease-in-out infinite;
+}
+
+@keyframes hero-line-draw {
+  from {
+    transform: scaleX(0);
+    opacity: 0.4;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.hero-accent-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: hero-line-draw 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+
+@keyframes hero-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+.hero-glow {
+  animation: hero-glow-pulse 6s ease-in-out infinite;
+}
+
+.hero-watermark {
+  position: absolute;
+  right: 4%;
+  top: 18%;
+  z-index: 5;
+  font-family: var(--font-display-expanded);
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 180, 10, 0.14);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes hero-photo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.hero-photo-float {
+  animation: hero-photo-float 7s ease-in-out infinite;
+}
+
+.hero-photo-float-delayed {
+  animation-delay: -2.5s;
+}
+
+.pitch-top {
+  position: relative;
+  z-index: 10;
+  margin-top: -2vw;
+  clip-path: polygon(0 2.5vw, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Angled roofline into a section — decorative wedge only, never clips content */
+.pitch-roofline-enter {
+  position: relative;
+  z-index: 1;
+  margin-top: -2.5vw;
+}
+
+.emergency-banner.pitch-roofline-enter::before {
+  content: '';
+  position: absolute;
+  top: -2.5vw;
+  left: 0;
+  right: 0;
+  height: 2.5vw;
+  background: var(--emergency-bg);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .pitch-top {
+    margin-top: -3vw;
+    clip-path: polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .pitch-roofline-enter {
+    margin-top: -3.5vw;
+  }
+
+  .emergency-banner.pitch-roofline-enter::before {
+    top: -3.5vw;
+    height: 3.5vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .verified-stamp {
+    transform: rotate(12deg) !important;
+  }
+
+  .hero-accent-line {
+    transform: scaleX(1);
+    animation: none;
+  }
+
+  .hero-glow {
+    animation: none;
+    opacity: 0.45;
+  }
+
+  .hero-photo-float,
+  .hero-photo-float-delayed {
+    animation: none;
+  }
+
+  .cta-shimmer {
+    animation: none !important;
+  }
+
+  .emergency-banner,
+  .emergency-headline,
+  .emergency-icon-pulse {
+    animation: none !important;
+  }
+
+  .trust-badge-seal,
+  .trust-badge-ring::before,
+  .verified-stamp {
+    animation: none !important;
+  }
+}
