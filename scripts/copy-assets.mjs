@@ -5,9 +5,10 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 const sourceDir = join(root, 'assets')
+const roofSourceDir = join(root, 'roof pics')
 const targetDir = join(root, 'public', 'images')
 
-/** @type {Array<{ source: string, target: string }>} */
+/** @type {Array<{ source: string, target: string, from?: 'assets' | 'roof' }>} */
 const assetMap = [
   { source: 'hero.png', target: 'hero-background.png' },
   { source: 'logo.png', target: 'logo.png' },
@@ -24,13 +25,19 @@ const assetMap = [
   { source: 'IMG_2272.jpeg', target: 'before-after-tile-finished.jpeg' },
   { source: 'IMG_2304.jpeg', target: 'meet-mario-owner-sign.jpeg' },
   { source: 'IMG_2219.jpeg', target: 'meet-mario-on-site.jpeg' },
+  // Roof portfolio — curated from /roof pics
+  { source: 'IMG_1755.jpeg', target: 'gallery-roof-finished-aerial.jpeg', from: 'roof' },
+  { source: 'IMG_1735.jpeg', target: 'gallery-roof-crew-on-site.jpeg', from: 'roof' },
+  { source: 'IMG_1751.jpeg', target: 'gallery-roof-certainteed-install.jpeg', from: 'roof' },
+  { source: 'IMG_1722.jpeg', target: 'gallery-roof-underlayment-crew.jpeg', from: 'roof' },
+  { source: 'IMG_2103.jpeg', target: 'gallery-roof-completed-residential.jpeg', from: 'roof' },
 ]
 
 mkdirSync(targetDir, { recursive: true })
 
 let copied = 0
-for (const { source, target } of assetMap) {
-  const sourcePath = join(sourceDir, source)
+for (const { source, target, from = 'assets' } of assetMap) {
+  const sourcePath = join(from === 'roof' ? roofSourceDir : sourceDir, source)
   const targetPath = join(targetDir, target)
 
   if (!existsSync(sourcePath)) {

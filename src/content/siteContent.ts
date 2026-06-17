@@ -39,9 +39,9 @@ export const hero = {
   backgroundImage: '/images/hero-background.png',
   showcasePhotos: [
     {
-      src: '/images/gallery-master-bath-finished-01.jpeg',
-      alt: 'Finished master bathroom remodel by Mario\'s Roofing & Construction',
-      caption: 'Bath remodel',
+      src: '/images/gallery-roof-crew-on-site.jpeg',
+      alt: "Mario's Roofing crew installing shingles on a Gulf Coast home",
+      caption: 'Roofing crew',
     },
     {
       src: '/images/meet-mario-on-site.jpeg',
@@ -180,12 +180,36 @@ export type GalleryItem =
 
 export const gallery: GalleryItem[] = [
   {
+    id: 'roof-finished-aerial',
+    type: 'image',
+    src: '/images/gallery-roof-finished-aerial.jpeg',
+    alt: 'New architectural shingle roof on a Gulf Coast home, viewed from the ridge',
+    caption: 'Architectural Shingle Install — Gulf Coast',
+    category: 'roofing',
+  },
+  {
+    id: 'roof-crew-on-site',
+    type: 'image',
+    src: '/images/gallery-roof-crew-on-site.jpeg',
+    alt: 'Roofing crew installing shingles on a brick and siding home under blue skies',
+    caption: 'Crew On Site — Full Replacement',
+    category: 'roofing',
+  },
+  {
     id: 'bath-finished-01',
     type: 'image',
     src: '/images/gallery-master-bath-finished-01.jpeg',
     alt: 'Finished master bathroom with frameless glass shower and tile work',
     caption: 'Master Bath Remodel — Galveston Area',
     category: 'remodeling',
+  },
+  {
+    id: 'roof-certainteed',
+    type: 'image',
+    src: '/images/gallery-roof-certainteed-install.jpeg',
+    alt: 'CertainTeed Landmark shingles staged on a residential roof ridge during installation',
+    caption: 'CertainTeed Shingle Install',
+    category: 'roofing',
   },
   {
     id: 'tile-install',
@@ -196,12 +220,28 @@ export const gallery: GalleryItem[] = [
     category: 'remodeling',
   },
   {
+    id: 'roof-underlayment',
+    type: 'image',
+    src: '/images/gallery-roof-underlayment-crew.jpeg',
+    alt: 'Roofing crew installing synthetic underlayment on a steep residential roof',
+    caption: 'Synthetic Underlayment — Quality Prep',
+    category: 'roofing',
+  },
+  {
     id: 'shower-framing',
     type: 'image',
     src: '/images/gallery-shower-backboard-framing.jpeg',
     alt: 'Shower area with cement backer board and framing',
     caption: 'Shower Build-Out — In Progress',
     category: 'construction',
+  },
+  {
+    id: 'roof-completed',
+    type: 'image',
+    src: '/images/gallery-roof-completed-residential.jpeg',
+    alt: 'Completed brown architectural shingle roof on a brick Gulf Coast home',
+    caption: 'Residential Roof — Completed',
+    category: 'roofing',
   },
   {
     id: 'wall-framing',
@@ -226,13 +266,6 @@ export const gallery: GalleryItem[] = [
     alt: 'Shower tile installation in progress with leveling clips',
     caption: 'Precision Tile Work',
     category: 'remodeling',
-  },
-  {
-    id: 'roofing-placeholder',
-    type: 'placeholder',
-    caption: 'Roofing Projects',
-    category: 'roofing',
-    message: 'Recent roof installs — gallery updating soon.',
   },
 ]
 
@@ -299,8 +332,8 @@ export const serviceAreas = [
 ] as const
 
 export const serviceAreasSection = {
-  image: '/images/hero-background.png',
-  imageAlt: 'Residential roofing on a Gulf Coast home',
+  image: '/images/gallery-roof-finished-aerial.jpeg',
+  imageAlt: 'New architectural shingle roof on a Gulf Coast residential home',
   stats: [
     { label: 'Communities served', value: '12+' },
     { label: 'Service region', value: 'Gulf Coast' },

@@ -21,6 +21,11 @@ Build copies them here with clear names via `npm run copy-assets`.
 | `before-after-tile-finished.jpeg` | `IMG_2272.jpeg` | Before/after slider |
 | `meet-mario-owner-sign.jpeg` | `IMG_2304.jpeg` | Meet Mario — primary (yard sign) |
 | `meet-mario-on-site.jpeg` | `IMG_2219.jpeg` | Meet Mario — inset (on-site, cropped) |
+| `gallery-roof-finished-aerial.jpeg` | `roof pics/IMG_1755.jpeg` | Gallery + Service Areas |
+| `gallery-roof-crew-on-site.jpeg` | `roof pics/IMG_1735.jpeg` | Gallery + Hero collage |
+| `gallery-roof-certainteed-install.jpeg` | `roof pics/IMG_1751.jpeg` | Gallery |
+| `gallery-roof-underlayment-crew.jpeg` | `roof pics/IMG_1722.jpeg` | Gallery |
+| `gallery-roof-completed-residential.jpeg` | `roof pics/IMG_2103.jpeg` | Gallery |
 
 ## Adding new images
 
@@ -31,5 +36,4 @@ Build copies them here with clear names via `npm run copy-assets`.
 
 ## Placeholders (v1)
 
-- **Roofing gallery tile** — configured in `siteContent.ts` (no image file yet).
 - **Testimonials** — `testimonials.enabled = false` until real reviews are added.
