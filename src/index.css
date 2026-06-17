@@ -261,16 +261,6 @@
 }
 
 /* ── Emergency banner ── */
-@keyframes emergency-bg-drift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 @keyframes emergency-line-flow {
   0% {
     background-position: 150% center;
@@ -291,17 +281,52 @@
 }
 
 .emergency-banner {
+  --emergency-red-deep: #a8151c;
+  --emergency-red-mid: #b51820;
+  --emergency-red-bright: #c41e28;
   --emergency-bg: linear-gradient(
-    110deg,
-    #b81c25 0%,
-    #c8202a 35%,
-    #d42a35 50%,
-    #c8202a 65%,
-    #b81c25 100%
+    165deg,
+    var(--emergency-red-bright) 0%,
+    var(--emergency-red-mid) 42%,
+    var(--emergency-red-deep) 100%
   );
+  position: relative;
+  isolation: isolate;
+}
+
+/* One shaped surface (wedge + body) — avoids two-tone seam at the roofline */
+.emergency-banner.pitch-roofline-enter {
+  margin-top: -2.5vw;
+  background: transparent;
+}
+
+.emergency-banner.pitch-roofline-enter::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -2.5vw;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: var(--emergency-bg);
-  background-size: 200% 100%;
-  animation: emergency-bg-drift 14s ease-in-out infinite;
+  clip-path: polygon(0 2.5vw, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.emergency-banner.pitch-roofline-enter > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .emergency-banner.pitch-roofline-enter {
+    margin-top: -3.5vw;
+  }
+
+  .emergency-banner.pitch-roofline-enter::before {
+    top: -3.5vw;
+    clip-path: polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
+  }
 }
 
 .emergency-headline {
@@ -414,38 +439,10 @@
   clip-path: polygon(0 2.5vw, 100% 0, 100% 100%, 0 100%);
 }
 
-/* Angled roofline into a section — decorative wedge only, never clips content */
-.pitch-roofline-enter {
-  position: relative;
-  z-index: 1;
-  margin-top: -2.5vw;
-}
-
-.emergency-banner.pitch-roofline-enter::before {
-  content: '';
-  position: absolute;
-  top: -2.5vw;
-  left: 0;
-  right: 0;
-  height: 2.5vw;
-  background: var(--emergency-bg);
-  clip-path: polygon(0 100%, 100% 0, 100% 100%);
-  pointer-events: none;
-}
-
 @media (min-width: 640px) {
   .pitch-top {
     margin-top: -3vw;
     clip-path: polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
-  }
-
-  .pitch-roofline-enter {
-    margin-top: -3.5vw;
-  }
-
-  .emergency-banner.pitch-roofline-enter::before {
-    top: -3.5vw;
-    height: 3.5vw;
   }
 }
 
