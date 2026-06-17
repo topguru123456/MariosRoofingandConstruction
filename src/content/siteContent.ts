@@ -1,3 +1,5 @@
+import { siteUrl } from '../lib/siteUrl'
+
 /** Navbar logo heights in px — used in Header.tsx */
 export const headerLayout = {
   logoHeightDefault: 100,
@@ -8,7 +10,7 @@ export const headerLayout = {
 
 export const site = {
   name: "Mario's Roofing & Construction",
-  url: 'https://mariosroofingandconstruction.com',
+  url: siteUrl,
   tagline: 'ROOFING • REMODELING • PLUMBING • HVAC',
   phones: {
     texas: { label: 'Texas Line', number: '409-999-0600', href: 'tel:+14099990600' },
