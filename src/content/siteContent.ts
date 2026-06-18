@@ -360,6 +360,13 @@ export const transformations = [
   },
 ] as const
 
+type TestimonialItem = {
+  id: string
+  quote: string
+  author: string
+  location: string
+}
+
 export const testimonials = {
   enabled: true,
   eyebrow: 'Customer Reviews',
@@ -374,8 +381,8 @@ export const testimonials = {
       author: 'Jason N',
       location: 'Clear Lake, TX',
     },
-  ],
-} as const
+  ] satisfies TestimonialItem[],
+}
 
 export const serviceAreas = [
   'Houston',
