@@ -361,17 +361,20 @@ export const transformations = [
 ] as const
 
 export const testimonials = {
-  enabled: false as boolean,
+  enabled: true,
   eyebrow: 'Customer Reviews',
   title: 'What Our Customers Say',
   placeholderMessage:
     'Reviews from Houston & Galveston homeowners — coming soon.',
-  items: [] as Array<{
-    id: string
-    quote: string
-    author: string
-    location: string
-  }>,
+  items: [
+    {
+      id: 'jason-n-clear-lake',
+      quote:
+        'Mario has done several projects in my home. His knowledge and expertise is top notch!!!!',
+      author: 'Jason N',
+      location: 'Clear Lake, TX',
+    },
+  ],
 } as const
 
 export const serviceAreas = [
