@@ -2,10 +2,10 @@ import { siteUrl } from '../lib/siteUrl'
 
 /** Navbar logo heights in px — used in Header.tsx */
 export const headerLayout = {
-  logoHeightDefault: 100,
-  logoHeightScrolled: 48,
-  /** navbar row padding + logo; keep in sync with Header + Hero overlap */
-  navBarOverlap: '7rem',
+  logoHeightDefault: 112,
+  logoHeightScrolled: 56,
+  /** Sticky header stack height on lg+ — keep in sync with .hero-section margin-top */
+  navBarOverlap: '11rem',
 } as const
 
 export const site = {

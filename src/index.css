@@ -72,8 +72,8 @@
 
   @media (min-width: 1024px) {
     .hero-section {
-      margin-top: -7rem;
-      min-height: calc(85vh + 7rem);
+      margin-top: -11rem;
+      min-height: calc(85vh + 11rem);
     }
   }
 

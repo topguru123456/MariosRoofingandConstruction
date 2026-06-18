@@ -1,6 +1,6 @@
 import { ArrowRight, Mail, Menu, Phone, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { navLinks, site } from '../content/siteContent'
+import { headerLayout, navLinks, site } from '../content/siteContent'
 import { useScrollHeader } from '../hooks/useScrollHeader'
 import { CtaButton } from './ui/CtaButton'
 
@@ -40,8 +40,13 @@ function DesktopTopBar() {
 }
 
 function logoHeightClass(scrolled: boolean) {
-  if (scrolled) return 'h-10 sm:h-11 lg:h-12'
-  return 'h-12 sm:h-16 lg:h-[100px]'
+  if (scrolled) return 'h-11 sm:h-12 lg:h-14'
+  return 'h-14 sm:h-16 lg:h-[112px]'
+}
+
+function headerBarClass(scrolled: boolean) {
+  if (scrolled) return 'min-h-[4.25rem] py-2.5 lg:min-h-[4.75rem] lg:py-2'
+  return 'min-h-[4.25rem] py-2.5 lg:min-h-[7.5rem] lg:py-3'
 }
 
 export function Header() {
@@ -68,16 +73,16 @@ export function Header() {
         <DesktopTopBar />
 
         <header
-          className={`w-full transition-[background-color,box-shadow,padding] duration-300 ${headerBg} py-2.5 lg:py-1.5`}
+          className={`w-full transition-[background-color,box-shadow,min-height,padding] duration-300 ${headerBg} ${headerBarClass(scrolled)}`}
         >
-          <div className="section-container flex items-center justify-between gap-4">
-            <a href="#" className="focus-ring-dark flex shrink-0 items-center rounded-sm leading-none">
+          <div className="section-container flex h-full items-center justify-between gap-4">
+            <a href="#" className="focus-ring-dark flex h-full shrink-0 items-center rounded-sm leading-none">
               <img
                 src="/images/logo.png"
                 alt={site.name}
-                className={`block w-auto max-w-[min(168px,46vw)] transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:max-w-none ${logoHeightClass(scrolled)}`}
-                width={200}
-                height={100}
+                className={`block w-auto max-h-full max-w-[min(190px,50vw)] object-contain transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:max-w-none ${logoHeightClass(scrolled)}`}
+                width={220}
+                height={headerLayout.logoHeightDefault}
               />
             </a>
 
@@ -130,9 +135,9 @@ export function Header() {
                 <img
                   src="/images/logo.png"
                   alt={site.name}
-                  className="h-10 w-auto max-w-[min(150px,40vw)]"
-                  width={200}
-                  height={40}
+                  className="h-12 w-auto max-w-[min(180px,48vw)]"
+                  width={240}
+                  height={48}
                 />
               </a>
               <button

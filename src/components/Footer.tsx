@@ -11,9 +11,9 @@ export function Footer() {
             <img
               src="/images/logo.png"
               alt={site.name}
-              className="h-16 w-auto sm:h-[4.5rem]"
-              width={160}
-              height={64}
+              className="h-20 w-auto sm:h-[5.5rem]"
+              width={200}
+              height={88}
             />
             <p className="mt-4 max-w-xs text-[15px] leading-relaxed text-cream/70">
               Reliable home improvement across Houston, Galveston, and the Gulf Coast.
