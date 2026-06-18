@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react'
 import { meetMario, site } from '../content/siteContent'
+import { BookShowcase } from './ui/BookShowcase'
 import { CtaButton } from './ui/CtaButton'
 import { Reveal } from './ui/Reveal'
 import { SectionHeader } from './ui/SectionHeader'
@@ -10,7 +11,7 @@ export function MeetMario() {
       <div className="section-container">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal direction="scale">
-            <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative mx-auto w-full max-w-md pb-10 sm:pb-12 lg:max-w-none">
               <div className="overflow-hidden rounded-2xl border border-navy/8 bg-cream shadow-[0_20px_50px_rgba(19,32,46,0.1)]">
                 <div className="relative aspect-[3/4] sm:aspect-[4/5]">
                   <img
@@ -30,6 +31,13 @@ export function MeetMario() {
                   className="h-full w-full object-cover scale-125"
                   style={{ objectPosition: meetMario.photos.secondary.objectPosition }}
                   loading="lazy"
+                />
+              </div>
+
+              <div className="absolute -bottom-8 -left-1 sm:-bottom-10 sm:-left-3">
+                <BookShowcase
+                  src={meetMario.author.cover.src}
+                  alt={meetMario.author.cover.alt}
                 />
               </div>
 
@@ -60,6 +68,20 @@ export function MeetMario() {
                 </Reveal>
               ))}
             </ul>
+
+            <Reveal delay={0.12}>
+              <blockquote className="mt-8 border-l-[3px] border-gold bg-cream/50 py-4 pl-5 pr-4 sm:pl-6">
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gold-deep">
+                  {meetMario.author.label}
+                </p>
+                <p className="mt-1.5 font-serif text-[18px] font-semibold leading-snug text-navy sm:text-[19px]">
+                  {meetMario.author.title}
+                </p>
+                <p className="mt-2 text-[14px] leading-relaxed text-slate-soft">
+                  {meetMario.author.line}
+                </p>
+              </blockquote>
+            </Reveal>
 
             <Reveal delay={0.15}>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">

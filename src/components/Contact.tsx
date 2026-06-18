@@ -80,14 +80,30 @@ export function Contact() {
 
     setStatus('submitting')
 
+    const payload = {
+      name: String(data.get('name') ?? ''),
+      phone: String(data.get('phone') ?? ''),
+      email: String(data.get('email') ?? ''),
+      service: String(data.get('service') ?? ''),
+      message: String(data.get('message') ?? ''),
+      company: String(data.get('company') ?? ''),
+    }
+
     try {
       const response = await fetch(site.formEndpoint, {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       })
 
-      if (!response.ok) throw new Error('Form submission failed')
+      const result = (await response.json()) as { ok?: boolean; error?: string }
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error ?? 'Form submission failed')
+      }
 
       setStatus('success')
       form.reset()
@@ -120,7 +136,8 @@ export function Contact() {
                     </div>
                     <p className="font-display text-[24px] font-bold text-navy">Message sent!</p>
                     <p className="mt-2 text-[16px] text-slate-soft">
-                      Thanks for reaching out. We&apos;ll get back to you shortly.
+                      Thanks for reaching out. We&apos;ll get back to you shortly — check your inbox
+                      for a confirmation email.
                     </p>
                     <button
                       type="button"

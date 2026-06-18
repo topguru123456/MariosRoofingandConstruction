@@ -18,7 +18,7 @@ export const site = {
   },
   email: 'abcsconst@gmail.com',
   emailHref: 'mailto:abcsconst@gmail.com',
-  formEndpoint: 'https://formspree.io/f/xplaceholder',
+  formEndpoint: '/api/contact',
 } as const
 
 export const navLinks = [
@@ -122,6 +122,16 @@ export const meetMario = {
       objectPosition: '22% 30%',
     },
     caption: 'Mario on site — the same person you speak with when you call.',
+  },
+  author: {
+    cover: {
+      src: '/images/book-cover-front.png',
+      alt: 'Book cover: The Barter Life / La Vida del Trueque by Mario D. Romero',
+    },
+    label: 'Published Author',
+    title: 'The Barter Life · La Vida del Trueque',
+    line:
+      'Authors get it done. Less than 10% of writers who start a book ever finish — Mario did.',
   },
 } as const
 

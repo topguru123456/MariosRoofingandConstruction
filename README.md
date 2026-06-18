@@ -50,11 +50,30 @@ Copy `.env.example` to `.env` (already included for local dev):
 
 ```env
 VITE_SITE_URL=https://mariosroofingandconstruction.com
+RESEND_API_KEY=re_your_api_key_here
+RESEND_FROM_EMAIL=Mario's Roofing & Construction <inquiries@mariosroofingandconstruction.com>
+INQUIRY_NOTIFY_EMAIL=abcsconst@gmail.com
 ```
 
-Used for canonical URL, Open Graph tags, and JSON-LD schema. **No trailing slash.**
+| Variable | Purpose |
+|----------|---------|
+| `VITE_SITE_URL` | Canonical URL, Open Graph tags, JSON-LD schema |
+| `RESEND_API_KEY` | Resend API key (server-side only — **never** `VITE_` prefix) |
+| `RESEND_FROM_EMAIL` | Verified sender address in Resend |
+| `INQUIRY_NOTIFY_EMAIL` | Mario’s inbox for new form submissions (default: `abcsconst@gmail.com`) |
 
-Set the same variable in your host’s dashboard when deploying.
+Set the same variables in your host’s dashboard when deploying.
+
+### Contact form emails (Resend)
+
+Submitting the contact form sends **two emails**:
+
+1. **Mario** — new inquiry details (`INQUIRY_NOTIFY_EMAIL`), with reply-to set to the customer
+2. **Customer** — confirmation that the inquiry was received
+
+The API route is `/api/contact`. Deploy configs are included for **Netlify** (`netlify.toml`) and **Vercel** (`api/contact.ts` + `vercel.json`). Local `npm run dev` handles the same route via a Vite dev middleware.
+
+**Resend setup:** verify your domain in Resend, then set `RESEND_FROM_EMAIL` to an address on that domain (e.g. `inquiries@mariosroofingandconstruction.com`). Until the domain is verified, Resend’s test sender only works for limited testing.
 
 ## Project structure
 
@@ -96,7 +115,9 @@ See `public/images/ASSETS.md` for the current filename map.
 
 ## Pre-launch checklist
 
-- [ ] Replace Formspree placeholder in `siteContent.ts` (`formEndpoint`)
+- [ ] Add `RESEND_API_KEY` and verify domain in Resend
+- [ ] Set `RESEND_FROM_EMAIL` to a verified domain address
+- [ ] Confirm `INQUIRY_NOTIFY_EMAIL` is `abcsconst@gmail.com` (or Mario’s preferred inbox)
 - [ ] Confirm `VITE_SITE_URL` matches production domain
 - [ ] Point DNS at your static host (replace GoDaddy “Launching Soon” page)
 - [ ] Set `www` → apex redirect (pick one canonical version)
