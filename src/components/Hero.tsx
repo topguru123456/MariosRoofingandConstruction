@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
-import { Fragment } from 'react'
-import { Phone } from 'lucide-react'
-import { hero, site } from '../content/siteContent'
+import { Fragment, useState } from 'react'
+import { CirclePlay } from 'lucide-react'
+import { hero } from '../content/siteContent'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import {
   heroBody,
@@ -15,6 +15,7 @@ import {
   heroTrustStrip,
   staggerFast,
 } from '../lib/motion'
+import { HeroVideoModal } from './HeroVideoModal'
 import { CtaButton } from './ui/CtaButton'
 
 function HeroPhotoStack({ reduced }: { reduced: boolean }) {
@@ -46,7 +47,8 @@ function HeroPhotoStack({ reduced }: { reduced: boolean }) {
         <img
           src={secondary.src}
           alt={secondary.alt}
-          className="aspect-[4/5] w-full object-cover object-[22%_30%] scale-110"
+          className="aspect-[4/5] w-full object-cover scale-110"
+          style={{ objectPosition: secondary.objectPosition ?? 'center' }}
         />
         <div className="absolute inset-x-0 bottom-0 bg-navy/85 px-3 py-2">
           <p className="text-[10px] font-bold tracking-[0.1em] text-cream/80 uppercase">{secondary.caption}</p>
@@ -88,6 +90,7 @@ function HeroTrustBar({ reduced }: { reduced: boolean }) {
 
 export function Hero() {
   const reduced = usePrefersReducedMotion()
+  const [videoOpen, setVideoOpen] = useState(false)
 
   return (
     <section className="hero-section relative flex flex-col overflow-hidden bg-navy" aria-label="Hero">
@@ -166,12 +169,14 @@ export function Hero() {
             variants={heroCta}
           >
             <CtaButton
-              href={site.phones.texas.href}
-              icon={<Phone className="h-4 w-4" aria-hidden />}
+              as="button"
+              type="button"
+              onClick={() => setVideoOpen(true)}
+              icon={<CirclePlay className="h-5 w-5" aria-hidden />}
               shimmer
-              className="w-full !py-3 text-[14px] sm:w-auto sm:!py-3.5 sm:text-[15px]"
+              className="focus-ring-white w-full !py-3.5 text-[14px] shadow-[0_0_0_1px_rgba(242,180,10,0.35),0_10px_36px_rgba(242,180,10,0.28)] sm:w-auto sm:!py-4 sm:text-[15px]"
             >
-              Call {site.phones.texas.number}
+              {hero.projectVideo.ctaLabel}
             </CtaButton>
             <CtaButton
               href="#contact"
@@ -205,6 +210,12 @@ export function Hero() {
       </div>
 
       <HeroTrustBar reduced={reduced} />
+
+      <HeroVideoModal
+        open={videoOpen}
+        onClose={() => setVideoOpen(false)}
+        video={hero.projectVideo}
+      />
     </section>
   )
 }

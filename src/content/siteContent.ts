@@ -44,9 +44,10 @@ export const hero = {
       caption: 'Roofing crew',
     },
     {
-      src: '/images/meet-mario-on-site.jpeg',
-      alt: 'Mario on site at a Gulf Coast residential project',
-      caption: 'On the job',
+      src: '/images/meet-mario-owner-sign.jpeg',
+      alt: 'Mario smiling beside the Mario\'s Roofing & Construction yard sign at a job site',
+      caption: 'Meet Mario',
+      objectPosition: '38% 32%',
     },
   ],
   trustStrip: [
@@ -54,6 +55,14 @@ export const hero = {
     { value: '24/7', label: 'Storm damage & emergency repairs' },
     { value: 'Free', label: 'Drone roof inspections' },
   ],
+  projectVideo: {
+    src: '/videos/project-showcase.mp4',
+    poster: '/images/video-poster.jpg',
+    title: 'Projects in action',
+    subtitle: 'Real crews on real Gulf Coast jobs',
+    ctaLabel: 'Watch Our Work',
+    fallbackMessage: 'Try again on Wi‑Fi, or call us for a free quote.',
+  },
 } as const
 
 export const services = [
@@ -104,13 +113,15 @@ export const meetMario = {
   photos: {
     primary: {
       src: '/images/meet-mario-owner-sign.jpeg',
-      alt: 'Mario standing with Mario\'s Roofing & Construction yard sign at a residential job site',
+      alt: 'Mario smiling beside the Mario\'s Roofing & Construction yard sign in front of a Gulf Coast home',
+      objectPosition: '42% 28%',
     },
     secondary: {
       src: '/images/meet-mario-on-site.jpeg',
       alt: 'Mario on location at a Gulf Coast residential project',
+      objectPosition: '22% 30%',
     },
-    caption: 'Mario on the job — the same person you speak with on the phone.',
+    caption: 'Mario on site — the same person you speak with when you call.',
   },
 } as const
 
@@ -158,6 +169,11 @@ export const whyChooseUs = {
     caption: 'Master Craftsman — Residential Roofing',
     recipient: 'Mario Daniel Romero',
     validThrough: 'Valid through January 15, 2028',
+    credentialHat: {
+      image: '/images/cert-master-craftsman-hat.jpeg',
+      alt: 'CertainTeed Master Craftsman roofing contractor cap',
+      label: 'Worn on every job',
+    },
   },
 } as const
 
@@ -180,11 +196,35 @@ export type GalleryItem =
 
 export const gallery: GalleryItem[] = [
   {
+    id: 'project-commercial-replacement',
+    type: 'image',
+    src: '/images/gallery-project-commercial-replacement.jpeg',
+    alt: 'Roofing crew replacing a large commercial building roof with blue synthetic underlayment',
+    caption: 'Commercial Roof Replacement',
+    category: 'roofing',
+  },
+  {
+    id: 'project-church-replacement',
+    type: 'image',
+    src: '/images/gallery-project-church-replacement.jpeg',
+    alt: 'Crew replacing the roof on a brick church with exposed decking and material staging below',
+    caption: 'Church Roof Project',
+    category: 'roofing',
+  },
+  {
     id: 'roof-finished-aerial',
     type: 'image',
     src: '/images/gallery-roof-finished-aerial.jpeg',
     alt: 'New architectural shingle roof on a Gulf Coast home, viewed from the ridge',
     caption: 'Architectural Shingle Install — Gulf Coast',
+    category: 'roofing',
+  },
+  {
+    id: 'project-commercial-crew',
+    type: 'image',
+    src: '/images/gallery-project-commercial-crew.jpeg',
+    alt: 'Workers installing CertainTeed underlayment on a long commercial brick building',
+    caption: 'Commercial Crew On Site',
     category: 'roofing',
   },
   {
@@ -196,12 +236,28 @@ export const gallery: GalleryItem[] = [
     category: 'roofing',
   },
   {
+    id: 'project-church-site',
+    type: 'image',
+    src: '/images/gallery-project-church-site.jpeg',
+    alt: 'Mario\'s Roofing crew staging materials at a church roofing project',
+    caption: 'Church Project — On Site',
+    category: 'roofing',
+  },
+  {
     id: 'bath-finished-01',
     type: 'image',
     src: '/images/gallery-master-bath-finished-01.jpeg',
     alt: 'Finished master bathroom with frameless glass shower and tile work',
     caption: 'Master Bath Remodel — Galveston Area',
     category: 'remodeling',
+  },
+  {
+    id: 'project-underlayment-install',
+    type: 'image',
+    src: '/images/gallery-project-underlayment-install.jpeg',
+    alt: 'Roofer installing GAF StormGuard and CertainTeed underlayment on a commercial roof',
+    caption: 'Premium Underlayment Install',
+    category: 'roofing',
   },
   {
     id: 'roof-certainteed',
@@ -234,14 +290,6 @@ export const gallery: GalleryItem[] = [
     alt: 'Shower area with cement backer board and framing',
     caption: 'Shower Build-Out — In Progress',
     category: 'construction',
-  },
-  {
-    id: 'roof-completed',
-    type: 'image',
-    src: '/images/gallery-roof-completed-residential.jpeg',
-    alt: 'Completed brown architectural shingle roof on a brick Gulf Coast home',
-    caption: 'Residential Roof — Completed',
-    category: 'roofing',
   },
   {
     id: 'wall-framing',

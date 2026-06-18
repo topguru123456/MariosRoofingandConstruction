@@ -93,7 +93,7 @@ export function Gallery() {
           <SectionHeader
             eyebrow="Portfolio"
             title="Our Work"
-            description="Real projects across roofing, remodeling, and construction — quality you can see."
+            description="Real roofing, remodeling, and construction projects across the Gulf Coast — residential and commercial."
           />
         </Reveal>
 

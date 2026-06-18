@@ -5,7 +5,7 @@ type CtaVariant = 'primary' | 'secondary' | 'emergency'
 type CtaSize = 'sm' | 'md'
 
 type CtaButtonProps = {
-  href: string
+  href?: string
   children: ReactNode
   variant?: CtaVariant
   size?: CtaSize
@@ -14,6 +14,9 @@ type CtaButtonProps = {
   showArrow?: boolean
   shimmer?: boolean
   onClick?: () => void
+  as?: 'a' | 'button'
+  type?: 'button' | 'submit'
+  ariaLabel?: string
 }
 
 const base =
@@ -43,13 +46,13 @@ export function CtaButton({
   showArrow = false,
   shimmer = variant === 'primary',
   onClick,
+  as,
+  type = 'button',
+  ariaLabel,
 }: CtaButtonProps) {
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      className={`${base} ${variantStyles[variant]} ${sizeStyles[size]} ${shimmer ? 'cta-shimmer' : ''} ${className}`}
-    >
+  const classes = `${base} ${variantStyles[variant]} ${sizeStyles[size]} ${shimmer ? 'cta-shimmer' : ''} ${className}`
+  const content = (
+    <>
       {icon ? <span className="relative z-[1]">{icon}</span> : null}
       <span className="relative z-[1] flex items-center gap-2">
         {children}
@@ -60,6 +63,25 @@ export function CtaButton({
           />
         ) : null}
       </span>
+    </>
+  )
+
+  if (as === 'button' || !href) {
+    return (
+      <button
+        type={type}
+        onClick={onClick}
+        className={classes}
+        aria-label={ariaLabel}
+      >
+        {content}
+      </button>
+    )
+  }
+
+  return (
+    <a href={href} onClick={onClick} className={classes} aria-label={ariaLabel}>
+      {content}
     </a>
   )
 }

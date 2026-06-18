@@ -17,6 +17,7 @@ export function MeetMario() {
                     src={meetMario.photos.primary.src}
                     alt={meetMario.photos.primary.alt}
                     className="owner-photo-primary absolute inset-0 h-full w-full object-cover"
+                    style={{ objectPosition: meetMario.photos.primary.objectPosition }}
                     loading="lazy"
                   />
                 </div>
@@ -26,7 +27,8 @@ export function MeetMario() {
                 <img
                   src={meetMario.photos.secondary.src}
                   alt={meetMario.photos.secondary.alt}
-                  className="h-full w-full object-cover object-[22%_30%] scale-125"
+                  className="h-full w-full object-cover scale-125"
+                  style={{ objectPosition: meetMario.photos.secondary.objectPosition }}
                   loading="lazy"
                 />
               </div>

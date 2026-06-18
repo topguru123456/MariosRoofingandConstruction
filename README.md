@@ -61,6 +61,7 @@ Set the same variable in your host’s dashboard when deploying.
 ```
 ├── assets/              # Original photos (bath, cert, meet Mario, etc.)
 ├── roof pics/           # Roof portfolio originals
+├── additional/          # New assets from Mario (owner photos, credentials)
 ├── public/images/       # Web-ready images (generated + committed)
 ├── scripts/
 │   ├── copy-assets.mjs  # Maps sources → public/images
@@ -86,7 +87,7 @@ Components read from that file — change content there first.
 
 ## Images
 
-1. Drop originals into `assets/` or `roof pics/`.
+1. Drop originals into `assets/`, `roof pics/`, or `additional/`.
 2. Add a mapping in `scripts/copy-assets.mjs`.
 3. Reference the public path in `siteContent.ts` (e.g. `/images/gallery-roof-crew-on-site.jpeg`).
 4. Run `npm run copy-assets`.
@@ -100,8 +101,6 @@ See `public/images/ASSETS.md` for the current filename map.
 - [ ] Point DNS at your static host (replace GoDaddy “Launching Soon” page)
 - [ ] Set `www` → apex redirect (pick one canonical version)
 - [ ] Refresh Facebook/LinkedIn link preview after deploy
-- [ ] Optional: compress large JPEGs to WebP for faster mobile load
-
 ## License
 
 Private — © Mario's Roofing & Construction. All rights reserved.

@@ -107,6 +107,26 @@ function CertificateShowcase() {
         <CheckCircle2 className="h-3.5 w-3.5 text-gold" strokeWidth={2.5} />
         <p className="text-[9px] font-bold tracking-[0.14em] text-gold uppercase">Verified</p>
       </motion.div>
+
+      {certificate.credentialHat ? (
+        <motion.figure
+          className="absolute -bottom-5 -left-3 z-10 w-[6.75rem] overflow-hidden rounded-lg border-2 border-gold/50 bg-white shadow-[0_12px_32px_rgba(0,0,0,0.35)] sm:-left-5 sm:w-[7.75rem]"
+          initial={reduced ? false : { opacity: 0, y: 12, rotate: -8 }}
+          whileInView={{ opacity: 1, y: 0, rotate: -4 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.6, ease: easeOut, delay: 0.42 }}
+        >
+          <img
+            src={certificate.credentialHat.image}
+            alt={certificate.credentialHat.alt}
+            className="aspect-[4/5] w-full object-cover object-center"
+            loading="lazy"
+          />
+          <figcaption className="border-t border-navy/8 bg-navy px-2 py-1.5 text-center text-[8px] font-bold tracking-[0.12em] text-gold uppercase sm:text-[9px]">
+            {certificate.credentialHat.label}
+          </figcaption>
+        </motion.figure>
+      ) : null}
     </div>
   )
 }
