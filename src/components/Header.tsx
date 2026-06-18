@@ -25,11 +25,11 @@ function DesktopTopBar() {
           <span>{site.phones.florida.number}</span>
         </a>
 
-        <span className="h-3.5 w-px bg-cream/25" aria-hidden />
+        <span className="hidden h-3.5 w-px bg-cream/25 sm:block" aria-hidden />
 
         <a
           href={site.emailHref}
-          className="focus-ring-dark inline-flex items-center gap-1.5 rounded-sm transition-colors hover:text-gold"
+          className="focus-ring-dark hidden items-center gap-1.5 rounded-sm transition-colors hover:text-gold xl:inline-flex"
         >
           <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden />
           <span>{site.email}</span>
@@ -41,12 +41,12 @@ function DesktopTopBar() {
 
 function logoHeightClass(scrolled: boolean) {
   if (scrolled) return 'h-11 sm:h-12 lg:h-14'
-  return 'h-14 sm:h-16 lg:h-[112px]'
+  return 'h-14 sm:h-16 lg:h-[88px] xl:h-[112px]'
 }
 
 function headerBarClass(scrolled: boolean) {
   if (scrolled) return 'min-h-[4.25rem] py-2.5 lg:min-h-[4.75rem] lg:py-2'
-  return 'min-h-[4.25rem] py-2.5 lg:min-h-[7.5rem] lg:py-3'
+  return 'min-h-[4.25rem] py-2.5 lg:min-h-[6.5rem] lg:py-2.5 xl:min-h-[7.5rem] xl:py-3'
 }
 
 export function Header() {
@@ -61,7 +61,7 @@ export function Header() {
   }, [open])
 
   const navLinkClass =
-    'focus-ring-dark rounded-sm text-[15px] font-semibold text-cream/90 transition-colors hover:text-gold'
+    'focus-ring-dark rounded-sm text-[14px] font-semibold text-cream/90 transition-colors hover:text-gold xl:text-[15px]'
 
   const headerBg = scrolled
     ? 'bg-navy shadow-lg shadow-black/20'
@@ -86,8 +86,8 @@ export function Header() {
               />
             </a>
 
-            <div className="hidden items-center gap-6 lg:flex xl:gap-10">
-              <nav className="flex items-center gap-6 xl:gap-8" aria-label="Main">
+            <div className="hidden min-w-0 items-center gap-3 lg:flex xl:gap-10">
+              <nav className="flex items-center gap-3 xl:gap-8" aria-label="Main">
                 {navLinks.map((link) => (
                   <a key={link.href} href={link.href} className={navLinkClass}>
                     {link.label}
