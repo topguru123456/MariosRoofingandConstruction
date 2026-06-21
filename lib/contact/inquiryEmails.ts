@@ -1,5 +1,3 @@
-import { Resend } from 'resend'
-
 export type InquiryPayload = {
   name: string
   phone: string
@@ -108,20 +106,62 @@ function buildCustomerEmail(payload: InquiryPayload): string {
 function resolveFromAddress(): string {
   const configured = process.env.RESEND_FROM_EMAIL?.trim()
   if (configured) return configured
-  return `Marios Roofing <onboarding@resend.dev>`
+  return 'Marios Roofing <onboarding@resend.dev>'
+}
+
+type ResendApiError = {
+  message?: string
+}
+
+async function sendResendEmail(input: {
+  apiKey: string
+  from: string
+  to: string
+  subject: string
+  html: string
+  replyTo?: string
+}): Promise<void> {
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${input.apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: input.from,
+      to: [input.to],
+      subject: input.subject,
+      html: input.html,
+      reply_to: input.replyTo,
+    }),
+  })
+
+  if (!response.ok) {
+    let message = `Resend HTTP ${response.status}`
+    try {
+      const data = (await response.json()) as { message?: string; error?: ResendApiError }
+      message = data.message ?? data.error?.message ?? message
+    } catch {
+      // keep default message
+    }
+    throw new Error(message)
+  }
 }
 
 export async function sendInquiryEmails(payload: InquiryPayload): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) {
+    console.error('[contact] RESEND_API_KEY is missing')
     throw new Error('RESEND_API_KEY is not configured')
   }
 
   const from = resolveFromAddress()
   const notifyTo = process.env.INQUIRY_NOTIFY_EMAIL?.trim() ?? 'abcsconst@gmail.com'
-  const resend = new Resend(apiKey)
 
-  const ownerResult = await resend.emails.send({
+  console.info('[contact] Sending owner notification to', notifyTo)
+
+  await sendResendEmail({
+    apiKey,
     from,
     to: notifyTo,
     replyTo: payload.email,
@@ -129,22 +169,22 @@ export async function sendInquiryEmails(payload: InquiryPayload): Promise<void> 
     html: buildMarioEmail(payload),
   })
 
-  if (ownerResult.error) {
-    throw new Error(`Owner email failed: ${ownerResult.error.message}`)
-  }
-
   if (payload.email.toLowerCase() === notifyTo.toLowerCase()) {
+    console.info('[contact] Skipping customer confirmation — same as notify address')
     return
   }
 
-  const customerResult = await resend.emails.send({
-    from,
-    to: payload.email,
-    subject: `We received your inquiry — ${COMPANY}`,
-    html: buildCustomerEmail(payload),
-  })
-
-  if (customerResult.error) {
-    console.warn('[contact] Customer confirmation failed:', customerResult.error.message)
+  try {
+    console.info('[contact] Sending customer confirmation to', payload.email)
+    await sendResendEmail({
+      apiKey,
+      from,
+      to: payload.email,
+      subject: `We received your inquiry — ${COMPANY}`,
+      html: buildCustomerEmail(payload),
+    })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Customer email failed'
+    console.warn('[contact] Customer confirmation failed:', message)
   }
 }

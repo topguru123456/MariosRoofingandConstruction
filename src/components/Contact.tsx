@@ -13,6 +13,31 @@ const phoneLines = [
   { ...site.phones.florida, region: 'South Florida' },
 ] as const
 
+function parseApiError(data: unknown): string {
+  if (!data || typeof data !== 'object') {
+    return `Something went wrong. Please call us at ${site.phones.texas.number}.`
+  }
+
+  const record = data as Record<string, unknown>
+
+  if (typeof record.error === 'string') {
+    return record.error
+  }
+
+  if (record.error && typeof record.error === 'object') {
+    const nested = record.error as Record<string, unknown>
+    if (typeof nested.message === 'string') {
+      return nested.message
+    }
+  }
+
+  if (typeof record.message === 'string') {
+    return record.message
+  }
+
+  return `Something went wrong. Please call us at ${site.phones.texas.number}.`
+}
+
 function ContactSidebar() {
   return (
     <aside className="space-y-4 lg:pt-2">
@@ -101,16 +126,25 @@ export function Contact() {
         body: JSON.stringify(payload),
       })
 
-      const result = (await response.json()) as { ok?: boolean; error?: string }
+      let result: unknown = null
+      try {
+        result = await response.json()
+      } catch {
+        result = null
+      }
 
-      if (!response.ok || !result.ok) {
-        setErrorMessage(result.error ?? 'Form submission failed')
-        throw new Error(result.error ?? 'Form submission failed')
+      const apiError = parseApiError(result)
+
+      if (!response.ok || !(result as { ok?: boolean })?.ok) {
+        setErrorMessage(apiError)
+        setStatus('error')
+        return
       }
 
       setStatus('success')
       form.reset()
     } catch {
+      setErrorMessage(`Something went wrong. Please call us at ${site.phones.texas.number}.`)
       setStatus('error')
     }
   }
