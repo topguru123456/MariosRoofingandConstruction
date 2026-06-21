@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/contact.ts": {
+      "includeFiles": "lib/**"
+    }
+  },
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]

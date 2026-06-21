@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { handleContactPost } from './server/handleContactPost'
+import { parseContactBody, handleContactPost } from './lib/contact/handleContactPost'
 
 function contactApiPlugin(env: Record<string, string>): Plugin {
   for (const [key, value] of Object.entries(env)) {
@@ -28,7 +28,7 @@ function contactApiPlugin(env: Record<string, string>): Plugin {
         req.on('end', async () => {
           try {
             const raw = Buffer.concat(chunks).toString('utf8')
-            const body = raw ? JSON.parse(raw) : {}
+            const body = parseContactBody(raw)
             const result = await handleContactPost(body)
 
             res.statusCode = result.status

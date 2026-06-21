@@ -64,6 +64,13 @@ INQUIRY_NOTIFY_EMAIL=abcsconst@gmail.com
 
 Set the same variables in your host’s dashboard when deploying.
 
+**Vercel (production):** Project → Settings → Environment Variables. Add `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, and `INQUIRY_NOTIFY_EMAIL` for **Production** (and Preview if you test there). Redeploy after saving — local `.env` is **not** uploaded automatically.
+
+**Resend sender rules:**
+- Until your domain is verified, use `Marios Roofing <onboarding@resend.dev>` as `RESEND_FROM_EMAIL`
+- With an unverified custom domain, Resend rejects sends and the form will fail
+- After domain verification, switch to e.g. `Marios Roofing <inquiries@mariosroofingandconstruction.com>`
+
 ### Contact form emails (Resend)
 
 Submitting the contact form sends **two emails**:

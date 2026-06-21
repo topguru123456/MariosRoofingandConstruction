@@ -105,40 +105,46 @@ function buildCustomerEmail(payload: InquiryPayload): string {
   )
 }
 
+function resolveFromAddress(): string {
+  const configured = process.env.RESEND_FROM_EMAIL?.trim()
+  if (configured) return configured
+  return `Marios Roofing <onboarding@resend.dev>`
+}
+
 export async function sendInquiryEmails(payload: InquiryPayload): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
+  const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) {
     throw new Error('RESEND_API_KEY is not configured')
   }
 
-  const from =
-    process.env.RESEND_FROM_EMAIL ??
-    `${COMPANY} <onboarding@resend.dev>`
-  const notifyTo = process.env.INQUIRY_NOTIFY_EMAIL ?? 'abcsconst@gmail.com'
-
+  const from = resolveFromAddress()
+  const notifyTo = process.env.INQUIRY_NOTIFY_EMAIL?.trim() ?? 'abcsconst@gmail.com'
   const resend = new Resend(apiKey)
 
-  const [ownerResult, customerResult] = await Promise.all([
-    resend.emails.send({
-      from,
-      to: notifyTo,
-      replyTo: payload.email,
-      subject: `New inquiry: ${payload.service} — ${payload.name}`,
-      html: buildMarioEmail(payload),
-    }),
-    resend.emails.send({
-      from,
-      to: payload.email,
-      subject: `We received your inquiry — ${COMPANY}`,
-      html: buildCustomerEmail(payload),
-    }),
-  ])
+  const ownerResult = await resend.emails.send({
+    from,
+    to: notifyTo,
+    replyTo: payload.email,
+    subject: `New inquiry: ${payload.service} — ${payload.name}`,
+    html: buildMarioEmail(payload),
+  })
 
   if (ownerResult.error) {
-    throw new Error(ownerResult.error.message)
+    throw new Error(`Owner email failed: ${ownerResult.error.message}`)
   }
 
+  if (payload.email.toLowerCase() === notifyTo.toLowerCase()) {
+    return
+  }
+
+  const customerResult = await resend.emails.send({
+    from,
+    to: payload.email,
+    subject: `We received your inquiry — ${COMPANY}`,
+    html: buildCustomerEmail(payload),
+  })
+
   if (customerResult.error) {
-    throw new Error(customerResult.error.message)
+    console.warn('[contact] Customer confirmation failed:', customerResult.error.message)
   }
 }

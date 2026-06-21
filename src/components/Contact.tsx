@@ -70,6 +70,7 @@ function ContactSidebar() {
 
 export function Contact() {
   const [status, setStatus] = useState<FormState>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -79,6 +80,7 @@ export function Contact() {
     if (data.get('company')) return
 
     setStatus('submitting')
+    setErrorMessage(null)
 
     const payload = {
       name: String(data.get('name') ?? ''),
@@ -102,6 +104,7 @@ export function Contact() {
       const result = (await response.json()) as { ok?: boolean; error?: string }
 
       if (!response.ok || !result.ok) {
+        setErrorMessage(result.error ?? 'Form submission failed')
         throw new Error(result.error ?? 'Form submission failed')
       }
 
@@ -249,7 +252,8 @@ export function Contact() {
 
                       {status === 'error' ? (
                         <p className="rounded-lg bg-red/10 px-4 py-3 text-[14px] text-red">
-                          Something went wrong. Please call us at {site.phones.texas.number}.
+                          {errorMessage ??
+                            `Something went wrong. Please call us at ${site.phones.texas.number}.`}
                         </p>
                       ) : null}
 

@@ -41,6 +41,22 @@ function parsePayload(body: ContactRequestBody): InquiryPayload | null {
   return { name, phone, email, service, message }
 }
 
+export function parseContactBody(raw: unknown): ContactRequestBody {
+  if (typeof raw === 'string') {
+    try {
+      return JSON.parse(raw) as ContactRequestBody
+    } catch {
+      return {}
+    }
+  }
+
+  if (raw && typeof raw === 'object') {
+    return raw as ContactRequestBody
+  }
+
+  return {}
+}
+
 export async function handleContactPost(body: ContactRequestBody): Promise<ContactHandlerResult> {
   if (typeof body.company === 'string' && body.company.trim()) {
     return { status: 200, body: { ok: true } }
@@ -62,6 +78,19 @@ export async function handleContactPost(body: ContactRequestBody): Promise<Conta
       return {
         status: 503,
         body: { ok: false, error: 'Email service is not configured yet. Please call us directly.' },
+      }
+    }
+
+    if (message.includes('Owner email failed:')) {
+      const resendMessage = message.replace('Owner email failed: ', '')
+      return {
+        status: 502,
+        body: {
+          ok: false,
+          error: resendMessage.includes('domain')
+            ? 'Email is not fully set up yet. Please call us directly.'
+            : 'We could not send your message right now. Please call us directly.',
+        },
       }
     }
 

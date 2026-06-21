@@ -16,5 +16,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.ts", "server/**/*.ts", "api/**/*.ts", "netlify/functions/**/*.ts"]
+  "include": ["vite.config.ts", "lib/**/*.ts", "api/**/*.ts", "netlify/functions/**/*.ts"]
 }

@@ -1,5 +1,4 @@
 import type { Handler } from '@netlify/functions'
-import { handleContactPost } from '../../server/handleContactPost'
 
 const headers = {
   'Content-Type': 'application/json',
@@ -14,23 +13,25 @@ export const handler: Handler = async (event) => {
     }
   }
 
-  let body: Record<string, unknown> = {}
-
   try {
-    body = event.body ? JSON.parse(event.body) : {}
-  } catch {
+    const { parseContactBody, handleContactPost } = await import('../lib/contact/handleContactPost.js')
+    const body = parseContactBody(event.body)
+    const result = await handleContactPost(body)
+
     return {
-      statusCode: 400,
+      statusCode: result.status,
       headers,
-      body: JSON.stringify({ ok: false, error: 'Invalid request body' }),
+      body: JSON.stringify(result.body),
     }
-  }
-
-  const result = await handleContactPost(body)
-
-  return {
-    statusCode: result.status,
-    headers,
-    body: JSON.stringify(result.body),
+  } catch (error) {
+    console.error('[contact] Unhandled error:', error)
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        ok: false,
+        error: 'Something went wrong on our end. Please call us at 409-999-0600.',
+      }),
+    }
   }
 }
