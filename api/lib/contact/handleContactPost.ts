@@ -72,7 +72,7 @@ export async function handleContactPost(body: ContactRequestBody): Promise<Conta
     return { status: 200, body: { ok: true } }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unable to send email'
-    console.error('[contact]', message)
+    console.error('[contact] Email send failed:', message)
 
     if (message.includes('RESEND_API_KEY')) {
       return {
@@ -81,22 +81,9 @@ export async function handleContactPost(body: ContactRequestBody): Promise<Conta
       }
     }
 
-    if (message.includes('Owner email failed:')) {
-      const resendMessage = message.replace('Owner email failed: ', '')
-      return {
-        status: 502,
-        body: {
-          ok: false,
-          error: resendMessage.includes('domain')
-            ? 'Email is not fully set up yet. Please call us directly.'
-            : 'We could not send your message right now. Please call us directly.',
-        },
-      }
-    }
-
     return {
       status: 502,
-      body: { ok: false, error: 'We could not send your message right now. Please call us directly.' },
+      body: { ok: false, error: message },
     }
   }
 }

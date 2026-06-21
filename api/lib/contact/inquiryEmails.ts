@@ -109,10 +109,6 @@ function resolveFromAddress(): string {
   return 'Marios Roofing <onboarding@resend.dev>'
 }
 
-type ResendApiError = {
-  message?: string
-}
-
 async function sendResendEmail(input: {
   apiKey: string
   from: string
@@ -139,8 +135,8 @@ async function sendResendEmail(input: {
   if (!response.ok) {
     let message = `Resend HTTP ${response.status}`
     try {
-      const data = (await response.json()) as { message?: string; error?: ResendApiError }
-      message = data.message ?? data.error?.message ?? message
+      const data = (await response.json()) as { message?: string }
+      if (data.message) message = data.message
     } catch {
       // keep default message
     }
@@ -151,14 +147,11 @@ async function sendResendEmail(input: {
 export async function sendInquiryEmails(payload: InquiryPayload): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) {
-    console.error('[contact] RESEND_API_KEY is missing')
     throw new Error('RESEND_API_KEY is not configured')
   }
 
   const from = resolveFromAddress()
   const notifyTo = process.env.INQUIRY_NOTIFY_EMAIL?.trim() ?? 'abcsconst@gmail.com'
-
-  console.info('[contact] Sending owner notification to', notifyTo)
 
   await sendResendEmail({
     apiKey,
@@ -170,12 +163,10 @@ export async function sendInquiryEmails(payload: InquiryPayload): Promise<void> 
   })
 
   if (payload.email.toLowerCase() === notifyTo.toLowerCase()) {
-    console.info('[contact] Skipping customer confirmation — same as notify address')
     return
   }
 
   try {
-    console.info('[contact] Sending customer confirmation to', payload.email)
     await sendResendEmail({
       apiKey,
       from,

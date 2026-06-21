@@ -1,3 +1,5 @@
+import { handleContactPost, parseContactBody } from './lib/contact/handleContactPost'
+
 type JsonResponse = {
   status: (code: number) => { json: (body: unknown) => void }
 }
@@ -20,21 +22,7 @@ export default async function handler(req: ApiRequest, res: JsonResponse) {
     return res.status(405).json({ ok: false, error: 'Method not allowed' })
   }
 
-  try {
-    console.info('[contact] POST received')
-
-    const { parseContactBody, handleContactPost } = await import('../lib/contact/handleContactPost')
-    const body = parseContactBody(req.body)
-    const result = await handleContactPost(body)
-
-    console.info('[contact] Result status', result.status)
-    return res.status(result.status).json(result.body)
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error'
-    console.error('[contact] Unhandled error:', message, error)
-    return res.status(500).json({
-      ok: false,
-      error: 'Something went wrong on our end. Please call us at 409-999-0600.',
-    })
-  }
+  const body = parseContactBody(req.body)
+  const result = await handleContactPost(body)
+  return res.status(result.status).json(result.body)
 }
