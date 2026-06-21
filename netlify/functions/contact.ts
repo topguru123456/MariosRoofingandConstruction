@@ -1,5 +1,5 @@
 import type { Handler } from '@netlify/functions'
-import { handleContactPost, parseContactBody } from '../../api/lib/contact/handleContactPost'
+import { handleContactPost, parseContactBody } from '../../api/contact'
 
 const headers = {
   'Content-Type': 'application/json',

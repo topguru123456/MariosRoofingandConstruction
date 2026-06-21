@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { parseContactBody, handleContactPost } from './api/lib/contact/handleContactPost'
+import { parseContactBody, handleContactPost } from './api/contact'
 
 function contactApiPlugin(env: Record<string, string>): Plugin {
   for (const [key, value] of Object.entries(env)) {
