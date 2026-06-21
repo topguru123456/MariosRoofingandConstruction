@@ -1,4 +1,5 @@
 import type { Handler } from '@netlify/functions'
+import { handleContactPost, parseContactBody } from '../../lib/contact/handleContactPost'
 
 const headers = {
   'Content-Type': 'application/json',
@@ -14,7 +15,6 @@ export const handler: Handler = async (event) => {
   }
 
   try {
-    const { parseContactBody, handleContactPost } = await import('../lib/contact/handleContactPost.js')
     const body = parseContactBody(event.body)
     const result = await handleContactPost(body)
 

@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { handleContactPost, parseContactBody } from '../lib/contact/handleContactPost'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -6,7 +7,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { parseContactBody, handleContactPost } = await import('../lib/contact/handleContactPost.js')
     const body = parseContactBody(req.body)
     const result = await handleContactPost(body)
     return res.status(result.status).json(result.body)
